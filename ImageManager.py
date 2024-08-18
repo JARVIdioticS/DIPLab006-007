@@ -265,6 +265,18 @@ class ImageManager:
                 data[x - int(size/2), y - int(size/2), 1] = avgGreen
                 data[x - int(size/2), y - int(size/2), 2] = avgBlue
 
+    def unsharpFilter(self, size, k):
+        global data
+        if (size % 2 == 0):
+            print("Size Invalid: must be odd number!")
+            return
+        
+        tmpimg = np.copy(data)
+        self.averagingFilter(size)
+        
+        data = np.clip(tmpimg + k * (tmpimg - data), 0, 255)
+
+
     def gaussianBlurFilter(self, size, sigma):
         global data
 
